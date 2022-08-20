@@ -21,9 +21,15 @@ module "vpc" {
   single_nat_gateway     = true
   one_nat_gateway_per_az = false
 
-  private_subnet_tags = {
-    "karpenter.sh/discovery" = var.cluster_name
+  public_subnet_tags = {
+    "kubernetes.io/cluster/${local.cluster_name}" = "shared"
+    "kubernetes.io/role/elb"                      = 1
   }
+  
+  private_subnet_tags = {
+    "kubernetes.io/cluster/${local.cluster_name}" = "shared"
+    "kubernetes.io/role/internal-elb"             = 1
+  }  
 }
 
 module "eks" {
@@ -36,7 +42,7 @@ module "eks" {
   vpc_id     = module.vpc.vpc_id
   subnet_ids = module.vpc.private_subnets
 
-  # Required for Karpenter role below
+
   enable_irsa = true
 
   create_cluster_security_group = false
@@ -54,7 +60,6 @@ module "eks" {
       desired_size = 1
 
       iam_role_additional_policies = [
-        # Required by Karpenter
         "arn:${local.partition}:iam::aws:policy/AmazonSSMManagedInstanceCore"
       ]
     }
