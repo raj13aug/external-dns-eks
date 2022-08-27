@@ -1,20 +1,26 @@
-apiVersion: extensions/v1beta1
+apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: multiple-ingress
+  name: ingress-test
   annotations:
-    ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/rewrite-target: /
     kubernetes.io/ingress.class: nginx
 spec:
   rules:
-  - host: echo.robofarming.com
-    http: 
+  - host: echo.robofarming.link
+    http:
       paths:
-        - path: /echo-v1
-          backend:
-            serviceName: echo-server-v1
-            servicePort: 80
-        - path: /echo-v2
-          backend:
-            serviceName: echo-server-v2
-            servicePort: 80
+      - path: /echo-v1
+        pathType: Prefix
+        backend:
+          service:
+            name: echo-server-v1
+            port: 
+              number: 80
+      - path: /echo-v2
+        pathType: Prefix
+        backend:
+          service:
+            name: echo-server-v2
+            port: 
+              number: 80                  
