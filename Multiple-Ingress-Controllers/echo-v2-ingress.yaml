@@ -10,7 +10,7 @@ spec:
     matchLabels:
       app: echo-server
       version: v2
-  replicas: 2
+  replicas: 1
   template:
     metadata:
       labels:
@@ -19,7 +19,7 @@ spec:
     spec:
       containers:
       - name: echo-server
-        image: k8s.gcr.io/echoserver:1.5
+        image: nginx
 ---
 apiVersion: v1
 kind: Service
