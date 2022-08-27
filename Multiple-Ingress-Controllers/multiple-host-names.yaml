@@ -6,7 +6,8 @@ metadata:
     ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - http: echo.robofarming.com
+  - host: echo.robofarming.com
+    http: 
       paths:
         - path: /echo-v1
           backend:
