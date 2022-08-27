@@ -3,7 +3,7 @@ kind: Ingress
 metadata:
   name: multiple-ingress
   annotations:
-    ingress.kubernetes.io/rewrite-target: "serviceName=echo-server-v1 rewrite=/;serviceName=echo-server-v2 rewrite=/"
+    ingress.kubernetes.io/rewrite-target: /
     kubernetes.io/ingress.class: nginx
 spec:
   rules:
