@@ -1,20 +1,3 @@
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: echo-v2-ingress
-  annotations:
-    nginx.ingress.kubernetes.io/rewrite-target: /
-    kubernetes.io/ingress.class: nginx-internal
-spec:
-  rules:
-  - http: echo-v2.robofarming.com
-      paths:
-      - path: /echo-v2
-        backend:
-          serviceName: echo-server-v2
-          servicePort: 80
-
-
 ---
 apiVersion: apps/v1
 kind: Deployment
